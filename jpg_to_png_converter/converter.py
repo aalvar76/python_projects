@@ -11,7 +11,6 @@ def check_if_input_folder_exists(input_dir):
 		print("Please locate your images inside this folder.")
 		os.mkdir(input_dir)
 		
-
 def get_files_from_input_folder(input_dir):
 	img_files_names = os.listdir(input_dir)
 	img_files_paths = [os.path.join(input_dir, x) for x in img_files_names]
@@ -27,7 +26,7 @@ def convert_to_png_and_save(image_path, output_dir):
 
 	output_file_name = '.'.join(tail.split('.')[:-1])
 	output_file_name = f'{output_file_name}.png'
-	img.save(os.path.join(output_dir, output_file_name), format="png")
+	img.save(os.path.join(output_dir, output_file_name), format="PNG", optimize=True, keep=True)
 
 def run_converter(input_dir, output_dir):
 	check_if_input_folder_exists(input_dir)
@@ -36,6 +35,11 @@ def run_converter(input_dir, output_dir):
 		convert_to_png_and_save(img_path, output_dir)
 
 if __name__ == "__main__":
-	run_converter(INPUT_DIR, OUTPUT_DIR)
+	try:
+		run_converter(INPUT_DIR, OUTPUT_DIR)
+	except Exception as ex:
+		print("There has been an exception running the script!")
+		print(ex)
+		print("We apologize for the inconveniences!")
 	
 	
